@@ -14,8 +14,10 @@ EXTRA_DIST = \
 	arm/armidct.s \
 	arm/armint.h \
 	arm/armenc.h \
+	arm/armenc.c \
 	arm/armencfrag.s \
 	arm/armenquant.s \
+	arm/armloop.s \
 	c64x/c64xint.h \
 	c64x/c64xdec.h \
 	x86/mmxfrag.c \
@@ -139,6 +141,7 @@ encoder_sources = \
 	dequant.c \
 	fragment.c \
 	idct.c \
+	info.c \
 	internal.c \
 	state.c \
 	quant.c \
@@ -260,7 +263,6 @@ libtheoraenc_la_LDFLAGS = \
   -version-info @THENC_LIB_CURRENT@:@THENC_LIB_REVISION@:@THENC_LIB_AGE@ \
   @THEORAENC_LDFLAGS@ $(OGG_LIBS) \
   -no-undefined
-libtheoraenc_la_LIBADD = libtheoradec.la
 
 libtheora_la_SOURCES = \
 	$(decoder_sources) \
@@ -280,7 +282,7 @@ debug:
 profile:
 	$(MAKE) all CFLAGS="@PROFILE@"
 
-# contstruct various symbol export list files
+# construct various symbol export list files
 .def.exp : defexp.awk
 	awk -f defexp.awk $< > $@
 
